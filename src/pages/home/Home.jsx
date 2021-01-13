@@ -21,8 +21,9 @@ export default class Home extends Component {
 
   fetchArticles = async () => {
     try {
-      let response = await fetch(`http://localhost:3666/medium/`);
-      let articles = await response.json;
+      let response = await fetch("http://localhost:3666/medium/");
+      let articles = await response.json();
+      console.log(articles);
       this.setState({ articles: articles });
     } catch (error) {
       console.log(error);

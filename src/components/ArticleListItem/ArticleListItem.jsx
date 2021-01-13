@@ -1,5 +1,8 @@
+/** @format */
+
 import React from "react";
 import ArticleItemDetails from "../ArticleItemDetails/ArticleItemDetails";
+import { withRouter } from "react-router-dom";
 import "./styles.scss";
 class ArticleListItem extends React.Component {
   render() {
@@ -8,22 +11,23 @@ class ArticleListItem extends React.Component {
         className={`w-100 d-flex mb-auto justify-content-between align-start  pb-4 ${
           this.props.articleImg === "top" && "flex-column-reverse"
         }`}
+        onClick={() =>
+          this.props.history.push("/read/" + this.props.article._id)
+        }
       >
         <ArticleItemDetails {...this.props} />
         {this.props.articleImg && (
-          <a href="/">
-            <img
+          <img
             alt="cover"
-              className={
-                this.props.articleImg === "top" ? "img-large" : "img-small"
-              }
-              src={this.props.article.cover}
-            />
-          </a>
+            className={
+              this.props.articleImg === "top" ? "img-large" : "img-small"
+            }
+            src={this.props.article.cover}
+          />
         )}
       </div>
     );
   }
 }
 
-export default ArticleListItem;
+export default withRouter(ArticleListItem);
