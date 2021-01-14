@@ -35,14 +35,10 @@ export default class NewStory extends Component {
   };
   submitButton = (e) => {
     e.preventDefault();
-    this.postArticle();
-  };
-  submitButton = (e) => {
-    e.preventDefault();
     if (this.state.authorName) {
       this.verifyUser();
     } else {
-      alert("username missing");
+      alert("You need to include a username");
     }
   };
   verifyUser = async () => {
@@ -52,7 +48,7 @@ export default class NewStory extends Component {
       );
 
       if (response.ok) {
-        let author = response.json();
+        let author = await response.json();
         this.postArticle(author._id);
       } else {
         console.log("not found");
@@ -61,16 +57,27 @@ export default class NewStory extends Component {
       console.log(error);
     }
   };
-
-  postArticle = async () => {
+  addArticleToUser = async (articleID, authorID) => {
+    try {
+      let response = await fetch(
+        "http://localhost:3666/medium/" +
+          articleID +
+          "/add-to-author/" +
+          authorID,
+        {
+          method: "POST",
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  postArticle = async (authorID) => {
     try {
       let body = {
         category: this.state.category,
-        author: {
-          name: "yeetman",
-          img:
-            "https://www.biography.com/.image/t_share/MTIwNjA4NjM0MTI0NTM1MzA4/guy-fieri-101311-1-402.jpg",
-        },
+        author: authorID,
         headLine: this.state.title,
         subHead: this.state.subtitle,
         content: this.state.html,
@@ -89,13 +96,16 @@ export default class NewStory extends Component {
           }
         );
       } else {
-        await fetch("http://localhost:3666/medium/", {
+        let response = await fetch("http://localhost:3666/medium/", {
           method: "POST",
           body: JSON.stringify(body),
           headers: {
             "Content-Type": "application/json",
           },
         });
+        let res = await response.json();
+        console.log("RESPONSE", res);
+        this.addArticleToUser(res, authorID);
       }
       this.props.history.push("/");
     } catch (error) {
