@@ -15,7 +15,7 @@ export default class Stories extends Component {
 
   fetchArticles = async () => {
     try {
-      let response = await fetch("http://localhost:9001/articles/");
+      let response = await fetch("http://localhost:3666/medium/");
       let articles = await response.json();
       console.log(articles);
       this.setState({ articles: articles });
