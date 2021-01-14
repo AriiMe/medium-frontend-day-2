@@ -1,9 +1,11 @@
+/** @format */
+
 import React from "react";
 import { IoLogoTwitter, IoLogoLinkedin, IoLogoFacebook } from "react-icons/io";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { FaRegComment } from "react-icons/fa";
-import { Button } from "react-bootstrap";
-export default function Reactions() {
+import Comments from "../Comments/Comments";
+export default function Reactions(props) {
   return (
     <>
       <div
@@ -28,9 +30,7 @@ export default function Reactions() {
               marginLeft: "1em",
             }}
           />
-          <span style={{ fontSize: 12, marginLeft: "0.5em" }}>
-            13 Responses
-          </span>
+          <Comments id={props.id} />
         </div>
         <div style={{ fontSize: 24 }}>
           <IoLogoTwitter />
@@ -38,12 +38,6 @@ export default function Reactions() {
           <IoLogoFacebook />
           <IoBookmarkOutline />
         </div>
-      </div>
-
-      <div style={{ marginTop: 50, marginBottom: 200 }}>
-        <label>What are your thoughts?</label>
-        <textarea style={{ width: "100%", padding: 20 }} />
-        <Button variant="success">Send</Button>
       </div>
     </>
   );

@@ -11,6 +11,7 @@ import Stats from "./pages/stats"
 import Stories from "./pages/stories"
 const routes = [
   { path: "/", component: Home },
+  { path: "/edit-story/:slug", component: NewStory },
   { path: "/new-story", component: NewStory },
   { path: "/topics", component: Topics },
   { path: "/read/:slug", component: Read },
